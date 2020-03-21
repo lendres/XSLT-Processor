@@ -1,18 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using System.IO;
-using System.Xml;
-using System.Xml.XPath;
-using System.Xml.Xsl;
-
 using DigitalProduction.Forms;
 using GotDotNet.XInclude;
 using Plossum.CommandLine;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Windows.Forms;
+using System.Xml.XPath;
+using System.Xml.Xsl;
 
 namespace DigitalProduction.XSTProcessor
 {
@@ -34,6 +28,8 @@ namespace DigitalProduction.XSTProcessor
 		public Transformer()
 		{
 			InitializeComponent();
+
+			SetPostProcessorControls();
 
 			//string directory			= DigitalProduction.Reflection.Assembly.LibraryPath;
 			//directory					= DigitalProduction.IO.Path.ChangeDirectoryDotDot(directory, 2) + "\\";
@@ -128,9 +124,163 @@ namespace DigitalProduction.XSTProcessor
 			}
 		}
 
+		/// <summary>
+		/// Output (destination) file.
+		/// </summary>
+		[CommandLineOption(Name = "runpostprocessor", BoolFunction = BoolFunction.TrueIfPresent, Description = "Specifies if the post processor should be run.")]
+		public bool RunPostProcessor
+		{
+			get
+			{
+				return this.checkBoxPostProcessor.Checked;
+			}
+
+			set
+			{
+				this.checkBoxPostProcessor.Checked	= value;
+			}
+		}
+
+		/// <summary>
+		/// Output (destination) file.
+		/// </summary>
+		[CommandLineOption(Name = "postprocessor", Description = "Post processing routine to run after XSLT transformation is completed.")]
+		public string PostProcessor
+		{
+			get
+			{
+				return this.textBoxPostProcessor.Text.Trim();
+			}
+
+			set
+			{
+				this.textBoxPostProcessor.Text	= value;
+			}
+		}
+
+		#endregion
+
+		#region Event Handlers
+
+		#region XSLT Processing Section
+
+		/// <summary>
+		/// Browse for the input file.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="eventArgs">Event arguments.</param>
+		private void buttonBrowseInputFile_Click(object sender, EventArgs eventArgs)
+		{
+			string path = FileSelect.BrowseForAnXMLFile(this, "Select the Input (XML) File");
+
+			if (path != "")
+			{
+				this.InputFile = path;
+			}
+		}
+
+		/// <summary>
+		/// Browse for the transformation file.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="eventArgs">Event arguments.</param>
+		private void buttonBrowseXsltFile_Click(object sender, EventArgs eventArgs)
+		{
+			string path = FileSelect.BrowseForAFile(this, "XSL Transformation files (*.xslt)|*.xslt|XML files (*.xml)|*.xml|Text files (*.txt)|*.txt|All files (*.*)|*.*");
+
+			if (path != "")
+			{
+				this.XsltFile = path;
+			}
+		}
+
+		/// <summary>
+		/// Browse for the output file.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="eventArgs">Event arguments.</param>
+		private void buttonBrowseOutputFile_Click(object sender, EventArgs eventArgs)
+		{
+			string path = FileSelect.BrowseForANewFileLocation(this, "All files (*.*)|*.*");
+
+			if (path != "")
+			{
+				this.OutputFile = path;
+			}
+		}
+
+		#endregion
+
+		#region Post Processing Section
+
+		/// <summary>
+		/// Enable or disable post processing.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="eventArgs">Event arguments.</param>
+		private void checkBoxPostProcessor_CheckedChanged(object sender, EventArgs eventArgs)
+		{
+			SetPostProcessorControls();
+		}
+
+		/// <summary>
+		/// Browse for the transformation file.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="eventArgs">Event arguments.</param>
+		private void buttonBrowsePostProcessor_Click(object sender, EventArgs eventArgs)
+		{
+			string path = FileSelect.BrowseForAFile(this, "Executables (*.exe)|*.exe|Batch files (*.bat)|*.exe|All files (*.*)|*.*");
+
+			if (path != "")
+			{
+				this.PostProcessor = path;
+			}
+		}
+
+		#endregion
+
+		#region Form
+
+		/// <summary>
+		/// Process button click handler.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="e">Event arguments.</param>
+		private void buttonProcess_Click(object sender, EventArgs e)
+		{
+			string input		= this.textBoxInputFile.Text.Trim();
+			string transform	= this.textBoxXsltFile.Text.Trim();
+			string output		= this.textBoxOutputFile.Text.Trim();
+			Transform(input, transform, output);
+		}
+
+		/// <summary>
+		/// Close the application.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="e">Event arguments.</param>
+		private void buttonClose_Click(object sender, EventArgs e)
+		{
+			Close();
+		}
+
+		#endregion
+
 		#endregion
 
 		#region Methods
+
+		/// <summary>
+		/// Sets the enable/disable state of the post processor controls.
+		/// </summary>
+		private void SetPostProcessorControls()
+		{
+			bool enabled = this.checkBoxPostProcessor.Checked;
+			this.textBoxPostProcessor.Enabled       = enabled;
+			this.buttonBrowsePostProcessor.Enabled  = enabled;
+		}
+
 
 		/// <summary>
 		/// Perform the transformation.
@@ -140,7 +290,6 @@ namespace DigitalProduction.XSTProcessor
 		/// <param name="outputFile">Output file.</param>
 		private void Transform(string inputFile, string xsltFile, string outputFile)
 		{
-
 			try
 			{
 				XIncludingReader xIncludingReader	= new XIncludingReader(inputFile);
@@ -158,84 +307,30 @@ namespace DigitalProduction.XSTProcessor
 			catch (Exception exception)
 			{
 				// Add error handling here.
-				MessageBox.Show(this, exception.Message, "Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+				MessageBox.Show(this, "Error running XSLT transformation.\n\n" + exception.Message, "Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+				return;
+			}
+
+			try
+			{
+				if (this.checkBoxPostProcessor.Checked)
+				{
+					ProcessStartInfo startinfo	= new ProcessStartInfo();
+					startinfo.FileName			= this.PostProcessor;
+					//startinfo.Arguments			= "";
+
+					Process process = Process.Start(startinfo);
+				}
+			}
+			catch (Exception exception)
+			{
+				// Add error handling here.
+				MessageBox.Show(this, "Error running post processor.\n\n" + exception.Message, "Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
 				return;
 			}
 		}
 
 		#endregion
-
-		#region Event Handlers
-
-		/// <summary>
-		/// Process button click handler.
-		/// </summary>
-		/// <param name="sender">Sender.</param>
-		/// <param name="e">Event arguments.</param>
-		private void btnProcess_Click(object sender, EventArgs e)
-		{
-			string input		= this.textBoxInputFile.Text.Trim();
-			string transform	= this.textBoxXsltFile.Text.Trim();
-			string output		= this.textBoxOutputFile.Text.Trim();
-			Transform(input, transform, output);
-		}
-
-		/// <summary>
-		/// Close the application.
-		/// </summary>
-		/// <param name="sender">Sender.</param>
-		/// <param name="e">Event arguments.</param>
-		private void btnClose_Click(object sender, EventArgs e)
-		{
-			Close();
-		}
-
-		#endregion
-
-		/// <summary>
-		/// Browse for the input file.
-		/// </summary>
-		/// <param name="sender">Sender.</param>
-		/// <param name="e">Event arguments.</param>
-		private void buttonBrowseInputFile_Click(object sender, EventArgs e)
-		{
-			string path = FileSelect.BrowseForAnXMLFile(this, "Select the Input (XML) File");
-
-			if (path != "")
-			{
-				this.InputFile = path;
-			}
-		}
-
-		/// <summary>
-		/// Browse for the transformation file.
-		/// </summary>
-		/// <param name="sender">Sender.</param>
-		/// <param name="e">Event arguments.</param>
-		private void buttonBrowseXsltFile_Click(object sender, EventArgs e)
-		{
-			string path = FileSelect.BrowseForAFile(this, "XSL Transformation files (*.xslt)|*.xslt|XML files (*.xml)|*.xml|Text files (*.txt)|*.txt|All files (*.*)|*.*");
-
-			if (path != "")
-			{
-				this.XsltFile = path;
-			}
-		}
-
-		/// <summary>
-		/// Browse for the output file.
-		/// </summary>
-		/// <param name="sender">Sender.</param>
-		/// <param name="e">Event arguments.</param>
-		private void buttonBrowseOutputFile_Click(object sender, EventArgs e)
-		{
-			string path = FileSelect.BrowseForANewFileLocation(this, "All files (*.*)|*.*");
-
-			if (path != "")
-			{
-				this.OutputFile = path;
-			}
-		}
 
 	} // End class.
 } // End namespace.
