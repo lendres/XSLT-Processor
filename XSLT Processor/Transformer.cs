@@ -31,22 +31,6 @@ namespace DigitalProduction.XSTProcessor
 
 			SetPostProcessorControls();
 
-			//string directory			= DigitalProduction.Reflection.Assembly.LibraryPath;
-			//directory					= DigitalProduction.IO.Path.ChangeDirectoryDotDot(directory, 2) + "\\";
-
-			//string[,] transformlist		= new string[2, 2]  {{"latex.xslt", "Resume\\Resume-XSLT.tex"},
-			//												{"text.xslt", "Resume\\Resume_of_Lance_A_Endres.txt"}}; 
-
-			//for (int i = 0; i <= transformlist.GetUpperBound(0); i++)
-			//{
-			//	Transform(directory + "Resume.xml", directory + transformlist[i, 0], directory + transformlist[i, 1]);
-			//}
-			////Transform(directory + "Resume.xml", directory + "html.xslt", directory + "resume.html");
-			////Transform(directory + "Resume.xml", directory + "text.xslt", directory + "Resume\\Resume.txt");
-			////Transform(directory + "Resume.xml", directory + "latex.xslt", directory + "Resume\\Resume-XSLT.tex");
-			////Transform(directory + "Resume.xml", directory + "text.xslt", directory + "Resume\\Resume-XSLT.tex");
-			////Transform(directory + "Resume.xml", directory + "latex.xslt", "D:\\Temp\\Resume\\Resume\\Resume - XSLT.tex");
-
 			ParseCommandLine();
 		}
 
