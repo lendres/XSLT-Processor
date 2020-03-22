@@ -243,6 +243,24 @@ namespace DigitalProduction.XSTProcessor
 		#region Form
 
 		/// <summary>
+		/// Key up event handler.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="eventArgs">Event arguments.</param>
+		private void Transformer_KeyUp(object sender, KeyEventArgs eventArgs)
+		{
+			switch (eventArgs.KeyCode)
+			{
+				case Keys.F5:
+				{
+					this.buttonProcess.PerformClick();
+					eventArgs.Handled = true;
+					break;
+				}
+			}
+		}
+
+		/// <summary>
 		/// Process button click handler.
 		/// </summary>
 		/// <param name="sender">Sender.</param>
@@ -316,7 +334,8 @@ namespace DigitalProduction.XSTProcessor
 				if (this.checkBoxPostProcessor.Checked)
 				{
 					ProcessStartInfo startinfo	= new ProcessStartInfo();
-					startinfo.FileName			= this.PostProcessor;
+					startinfo.FileName			= System.IO.Path.GetFileName(this.PostProcessor);
+					startinfo.WorkingDirectory	= System.IO.Path.GetDirectoryName(this.PostProcessor);
 					//startinfo.Arguments			= "";
 
 					Process process = Process.Start(startinfo);

@@ -4,6 +4,6 @@
     <ProjectView>ProjectFiles</ProjectView>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>-input "..\..\..\..\Resume\Source\Resume.xml" -transform "..\..\..\..\Resume\Source\latex.xslt" -output "..\..\..\..\Resume\LaTeX\Resume-XSLT.tex" -runpostprocessor -postprocessor "..\..\..\..\Resume\LaTeX\Make Resume.bat"</StartArguments>
+    <StartArguments>-input "..\..\..\..\Resume\Source\Resume for Outside Oil and Gas.xml" -transform "..\..\..\..\Resume\Source\latex.xslt" -output "..\..\..\..\Resume\LaTeX\Resume-XSLT.tex" -runpostprocessor -postprocessor "..\..\..\..\Resume\LaTeX\Make Resume.bat"</StartArguments>
   </PropertyGroup>
 </Project>

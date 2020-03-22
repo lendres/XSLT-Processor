@@ -238,10 +238,12 @@ namespace DigitalProduction.XSTProcessor
 			this.Controls.Add(this.buttonClose);
 			this.Controls.Add(this.buttonProcess);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+			this.KeyPreview = true;
 			this.MaximizeBox = false;
 			this.Name = "Transformer";
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
 			this.Text = "XST Processor";
+			this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Transformer_KeyUp);
 			this.groupBoxProcessor.ResumeLayout(false);
 			this.groupBoxProcessor.PerformLayout();
 			this.groupBoxPostProcessing.ResumeLayout(false);
