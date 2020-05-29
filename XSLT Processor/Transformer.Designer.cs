@@ -2,8 +2,22 @@ namespace DigitalProduction.XSTProcessor
 {
 	partial class Transformer
 	{
-		#region Members / Variables.
+		#region Members
 
+		private System.Windows.Forms.TextBox			textBoxInputFile;
+		private System.Windows.Forms.Button				buttonBrowseInputFile;
+		private System.Windows.Forms.Label				labelInputFile;
+		private System.Windows.Forms.TextBox			textBoxXsltFile;
+		private System.Windows.Forms.Button				buttonBrowseXsltFile;
+		private System.Windows.Forms.Label				labelXsltFile;
+		private System.Windows.Forms.TextBox			textBoxOutputFile;
+		private System.Windows.Forms.Button				buttonBrowseOutputFile;
+		private System.Windows.Forms.Label				labelOutputFile;
+		private System.Windows.Forms.TextBox			textBoxPostProcessor;
+		private System.Windows.Forms.Button				buttonBrowsePostProcessor;
+		private System.Windows.Forms.CheckBox			checkBoxPostProcessor;
+		private System.Windows.Forms.GroupBox			groupBoxProcessor;
+		private System.Windows.Forms.GroupBox			groupBoxPostProcessing;
 		private System.Windows.Forms.Button				buttonProcess;
 		private System.Windows.Forms.Button				buttonClose;
 
@@ -13,6 +27,8 @@ namespace DigitalProduction.XSTProcessor
 		private System.ComponentModel.IContainer		components = null;
 
 		#endregion
+
+		#region Disposing
 
 		/// <summary>
 		/// Clean up any resources being used.
@@ -26,6 +42,8 @@ namespace DigitalProduction.XSTProcessor
 			}
 			base.Dispose(disposing);
 		}
+
+		#endregion
 
 		#region Windows Form Designer generated code
 
@@ -254,19 +272,5 @@ namespace DigitalProduction.XSTProcessor
 
 		#endregion
 
-		private System.Windows.Forms.TextBox textBoxInputFile;
-		private System.Windows.Forms.Button buttonBrowseInputFile;
-		private System.Windows.Forms.Label labelInputFile;
-		private System.Windows.Forms.TextBox textBoxXsltFile;
-		private System.Windows.Forms.Button buttonBrowseXsltFile;
-		private System.Windows.Forms.Label labelXsltFile;
-		private System.Windows.Forms.TextBox textBoxOutputFile;
-		private System.Windows.Forms.Button buttonBrowseOutputFile;
-		private System.Windows.Forms.Label labelOutputFile;
-		private System.Windows.Forms.TextBox textBoxPostProcessor;
-		private System.Windows.Forms.Button buttonBrowsePostProcessor;
-		private System.Windows.Forms.CheckBox checkBoxPostProcessor;
-		private System.Windows.Forms.GroupBox groupBoxProcessor;
-		private System.Windows.Forms.GroupBox groupBoxPostProcessing;
 	} // End class.
 } // End namespace.

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace DigitalProduction.XSTProcessor
@@ -9,7 +8,7 @@ namespace DigitalProduction.XSTProcessor
 	/// </summary>
 	static class Program
 	{
-		#region Main.
+		#region Main
 
 		/// <summary>
 		/// The main entry point for the application.
