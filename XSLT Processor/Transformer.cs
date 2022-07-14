@@ -14,7 +14,7 @@ namespace DigitalProduction.XSTProcessor
 	/// A simple XSLT transformer.
 	/// </summary>
 	[CommandLineManager(ApplicationName = "XSLT Transformer", Copyright = "Copyright (c) Lance A. Endres.")]
-	public partial class Transformer : Form
+	public partial class Transformer : DPMForm
 	{
 		#region Members
 
@@ -25,9 +25,19 @@ namespace DigitalProduction.XSTProcessor
 		/// <summary>
 		/// Default constructor.
 		/// </summary>
-		public Transformer()
+		public Transformer() :
+			base("DPM", "XSLT Transformer")
 		{
 			InitializeComponent();
+
+			// Registry access has to be created in constructor and done before setting controls.
+			Program.Registry = new RegistryAccess(this);
+
+			// Allows for the installation event to occur.  Largely useful for debugging or resetting the software if the
+			// registry gets messed up.
+			Program.Registry.RaiseInstallEvent();
+
+			InitializeControlsFromRegistry();
 
 			SetPostProcessorControls();
 
@@ -274,6 +284,30 @@ namespace DigitalProduction.XSTProcessor
 		#region Methods
 
 		/// <summary>
+		/// Initializes the controls from the stored settings.
+		/// </summary>
+		private void InitializeControlsFromRegistry()
+        {
+			this.textBoxInputFile.Text			= Program.Registry.InputFile;
+			this.textBoxXsltFile.Text			= Program.Registry.XsltFile;
+			this.textBoxOutputFile.Text			= Program.Registry.OutputFile;
+			this.checkBoxPostProcessor.Checked	= Program.Registry.RunPostProcessor;
+			this.textBoxPostProcessor.Text		= Program.Registry.PostProcessorFile;
+        }
+
+		/// <summary>
+		/// Initializes the controls from the stored settings.
+		/// </summary>
+		private void SaveControlsToRegistry()
+        {
+			Program.Registry.InputFile			= this.textBoxInputFile.Text;
+			Program.Registry.XsltFile			= this.textBoxXsltFile.Text;
+			Program.Registry.OutputFile			= this.textBoxOutputFile.Text;
+			Program.Registry.RunPostProcessor	= this.checkBoxPostProcessor.Checked;
+			Program.Registry.PostProcessorFile	= this.textBoxPostProcessor.Text;
+        }
+
+		/// <summary>
 		/// Sets the enable/disable state of the post processor controls.
 		/// </summary>
 		private void SetPostProcessorControls()
@@ -292,6 +326,9 @@ namespace DigitalProduction.XSTProcessor
 		/// <param name="outputFile">Output file.</param>
 		private void Transform(string inputFile, string xsltFile, string outputFile)
 		{
+			// Save the values in the controls.
+			SaveControlsToRegistry();
+
 			try
 			{
 				XIncludingReader xIncludingReader	= new XIncludingReader(inputFile);
