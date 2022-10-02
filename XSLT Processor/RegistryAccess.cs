@@ -75,6 +75,22 @@ namespace DigitalProduction.XSTProcessor
 		}
 
 		/// <summary>
+		/// The arguments for the XSLT file processing.
+		/// </summary>
+		public string XsltArguments
+		{
+			get
+			{
+				return GetValue(AppKey(), "XSLT Arguments", "");
+			}
+
+			set
+			{
+				SetValue(AppKey(), "XSLT Arguments", value);
+			}
+		}
+
+		/// <summary>
 		/// The output file.
 		/// </summary>
 		public string OutputFile

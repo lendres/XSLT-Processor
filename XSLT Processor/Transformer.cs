@@ -290,6 +290,7 @@ namespace DigitalProduction.XSTProcessor
         {
 			this.textBoxInputFile.Text			= Program.Registry.InputFile;
 			this.textBoxXsltFile.Text			= Program.Registry.XsltFile;
+			this.textBoxXsltArguments.Text		= Program.Registry.XsltArguments;
 			this.textBoxOutputFile.Text			= Program.Registry.OutputFile;
 			this.checkBoxPostProcessor.Checked	= Program.Registry.RunPostProcessor;
 			this.textBoxPostProcessor.Text		= Program.Registry.PostProcessorFile;
@@ -302,6 +303,7 @@ namespace DigitalProduction.XSTProcessor
         {
 			Program.Registry.InputFile			= this.textBoxInputFile.Text;
 			Program.Registry.XsltFile			= this.textBoxXsltFile.Text;
+			Program.Registry.XsltArguments		= this.textBoxXsltArguments.Text;
 			Program.Registry.OutputFile			= this.textBoxOutputFile.Text;
 			Program.Registry.RunPostProcessor	= this.checkBoxPostProcessor.Checked;
 			Program.Registry.PostProcessorFile	= this.textBoxPostProcessor.Text;
@@ -316,7 +318,6 @@ namespace DigitalProduction.XSTProcessor
 			this.textBoxPostProcessor.Enabled       = enabled;
 			this.buttonBrowsePostProcessor.Enabled  = enabled;
 		}
-
 
 		/// <summary>
 		/// Perform the transformation.
@@ -336,9 +337,11 @@ namespace DigitalProduction.XSTProcessor
 
 				XslCompiledTransform xslTransform	= new XslCompiledTransform(true);
 				xslTransform.Load(xsltFile);
-				
+
+				XsltArgumentList xsltArgumentList	= GetArgumentList();
+
 				System.IO.StreamWriter streamWriter = new StreamWriter(outputFile, false, System.Text.Encoding.ASCII);
-				xslTransform.Transform(xPathDocument, new XsltArgumentList(), streamWriter);
+				xslTransform.Transform(xPathDocument, xsltArgumentList, streamWriter);
 
 				xIncludingReader.Close();
 				streamWriter.Close();
@@ -368,6 +371,47 @@ namespace DigitalProduction.XSTProcessor
 				MessageBox.Show(this, "Error running post processor.\n\n" + exception.Message, "Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
 				return;
 			}
+		}
+
+		/// <summary>
+		/// Splits the string in the argument list textbox into a set of arguments to pass to the XSLT processor.
+		/// </summary>
+		/// <returns>XsltArgumentList.</returns>
+		private XsltArgumentList GetArgumentList()
+        {
+			XsltArgumentList argumentList = new XsltArgumentList();
+
+			// For an empty string, we just return the default XsltArgumentList object.
+			string arguments = this.textBoxXsltArguments.Text.Trim();
+
+			if (arguments == "")
+            {
+				return argumentList;
+            }
+
+			// Each set of arguments should be separated by a semicolon.  Each parameter has three parts, separated by a comma:
+			// name, namespaceUri, parameter
+			// So the string:
+			// projectlocation,,afterexperience;usegeneric,,no
+			// Gets turned into two parameters:
+			// projectlocation=afterexperience
+			// usegeneric=no
+			string[] splitArguments = arguments.Split(';');
+
+			foreach (string argumentLine in splitArguments)
+            {
+				char[]   delimiterChars = {','};
+				string[] splitArgumentLine = argumentLine.Split(delimiterChars);
+
+				if (splitArgumentLine.Length != 3)
+                {
+					throw new Exception("Invalid argument specified.");
+                }
+
+				argumentList.AddParam(splitArgumentLine[0], splitArgumentLine[1], splitArgumentLine[2]);
+            }
+
+			return argumentList;
 		}
 
 		#endregion
