@@ -165,7 +165,7 @@ namespace DigitalProduction.XSTProcessor
 		/// <param name="eventArgs">Event arguments.</param>
 		private void buttonBrowseInputFile_Click(object sender, EventArgs eventArgs)
 		{
-			string path = FileSelect.BrowseForAnXMLFile(this, "Select the Input (XML) File");
+			string path = FileSelect.BrowseForAnXMLFile(this, "Select the Input (XML) File", Path.GetDirectoryName(this.textBoxInputFile.Text));
 
 			if (path != "")
 			{
@@ -180,7 +180,8 @@ namespace DigitalProduction.XSTProcessor
 		/// <param name="eventArgs">Event arguments.</param>
 		private void buttonBrowseXsltFile_Click(object sender, EventArgs eventArgs)
 		{
-			string path = FileSelect.BrowseForAFile(this, "XSL Transformation files (*.xslt)|*.xslt|XML files (*.xml)|*.xml|Text files (*.txt)|*.txt|All files (*.*)|*.*");
+			string filterString	= "XSL Transformation files (*.xslt)|*.xslt|XML files (*.xml)|*.xml|Text files (*.txt)|*.txt|All files (*.*)|*.*";
+			string path			= FileSelect.BrowseForAFile(this, filterString, "Select the XSLT File");
 
 			if (path != "")
 			{
@@ -195,7 +196,7 @@ namespace DigitalProduction.XSTProcessor
 		/// <param name="eventArgs">Event arguments.</param>
 		private void buttonBrowseOutputFile_Click(object sender, EventArgs eventArgs)
 		{
-			string path = FileSelect.BrowseForANewFileLocation(this, "All files (*.*)|*.*");
+			string path = FileSelect.BrowseForANewFileLocation(this, "All files (*.*)|*.*", "Output File");
 
 			if (path != "")
 			{
@@ -224,7 +225,8 @@ namespace DigitalProduction.XSTProcessor
 		/// <param name="eventArgs">Event arguments.</param>
 		private void buttonBrowsePostProcessor_Click(object sender, EventArgs eventArgs)
 		{
-			string path = FileSelect.BrowseForAFile(this, "Executables (*.exe)|*.exe|Batch files (*.bat)|*.exe|All files (*.*)|*.*");
+			string filterString	= "Batch files (*.bat)|*.bat|Executables (*.exe)|*.exe|All files (*.*)|*.*";
+			string path			= FileSelect.BrowseForAFile(this, filterString, "Select the Post Processor", Path.GetDirectoryName(this.textBoxPostProcessor.Text));
 
 			if (path != "")
 			{

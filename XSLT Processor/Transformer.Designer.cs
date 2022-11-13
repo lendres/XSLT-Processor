@@ -66,10 +66,10 @@ namespace DigitalProduction.XSTProcessor
             this.buttonBrowsePostProcessor = new System.Windows.Forms.Button();
             this.checkBoxPostProcessor = new System.Windows.Forms.CheckBox();
             this.groupBoxProcessor = new System.Windows.Forms.GroupBox();
-            this.groupBoxPostProcessing = new System.Windows.Forms.GroupBox();
+            this.labelXsltArguments = new System.Windows.Forms.Label();
             this.textBoxXsltArguments = new System.Windows.Forms.TextBox();
             this.labelXsltFile = new System.Windows.Forms.Label();
-            this.labelXsltArguments = new System.Windows.Forms.Label();
+            this.groupBoxPostProcessing = new System.Windows.Forms.GroupBox();
             this.groupBoxProcessor.SuspendLayout();
             this.groupBoxPostProcessing.SuspendLayout();
             this.SuspendLayout();
@@ -195,6 +195,7 @@ namespace DigitalProduction.XSTProcessor
             this.buttonBrowsePostProcessor.TabIndex = 2;
             this.buttonBrowsePostProcessor.Text = "Browse...";
             this.buttonBrowsePostProcessor.UseVisualStyleBackColor = true;
+            this.buttonBrowsePostProcessor.Click += new System.EventHandler(this.buttonBrowsePostProcessor_Click);
             // 
             // checkBoxPostProcessor
             // 
@@ -227,18 +228,14 @@ namespace DigitalProduction.XSTProcessor
             this.groupBoxProcessor.TabStop = false;
             this.groupBoxProcessor.Text = "XSLT Processing";
             // 
-            // groupBoxPostProcessing
+            // labelXsltArguments
             // 
-            this.groupBoxPostProcessing.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBoxPostProcessing.Controls.Add(this.checkBoxPostProcessor);
-            this.groupBoxPostProcessing.Controls.Add(this.buttonBrowsePostProcessor);
-            this.groupBoxPostProcessing.Controls.Add(this.textBoxPostProcessor);
-            this.groupBoxPostProcessing.Location = new System.Drawing.Point(10, 230);
-            this.groupBoxPostProcessing.Name = "groupBoxPostProcessing";
-            this.groupBoxPostProcessing.Size = new System.Drawing.Size(559, 74);
-            this.groupBoxPostProcessing.TabIndex = 1;
-            this.groupBoxPostProcessing.TabStop = false;
-            this.groupBoxPostProcessing.Text = "Post Processing";
+            this.labelXsltArguments.AutoSize = true;
+            this.labelXsltArguments.Location = new System.Drawing.Point(9, 122);
+            this.labelXsltArguments.Name = "labelXsltArguments";
+            this.labelXsltArguments.Size = new System.Drawing.Size(60, 13);
+            this.labelXsltArguments.TabIndex = 10;
+            this.labelXsltArguments.Text = "Arguments:";
             // 
             // textBoxXsltArguments
             // 
@@ -258,14 +255,18 @@ namespace DigitalProduction.XSTProcessor
             this.labelXsltFile.TabIndex = 3;
             this.labelXsltFile.Text = "XSLT File";
             // 
-            // labelXsltArguments
+            // groupBoxPostProcessing
             // 
-            this.labelXsltArguments.AutoSize = true;
-            this.labelXsltArguments.Location = new System.Drawing.Point(9, 122);
-            this.labelXsltArguments.Name = "labelXsltArguments";
-            this.labelXsltArguments.Size = new System.Drawing.Size(60, 13);
-            this.labelXsltArguments.TabIndex = 10;
-            this.labelXsltArguments.Text = "Arguments:";
+            this.groupBoxPostProcessing.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBoxPostProcessing.Controls.Add(this.checkBoxPostProcessor);
+            this.groupBoxPostProcessing.Controls.Add(this.buttonBrowsePostProcessor);
+            this.groupBoxPostProcessing.Controls.Add(this.textBoxPostProcessor);
+            this.groupBoxPostProcessing.Location = new System.Drawing.Point(10, 230);
+            this.groupBoxPostProcessing.Name = "groupBoxPostProcessing";
+            this.groupBoxPostProcessing.Size = new System.Drawing.Size(559, 74);
+            this.groupBoxPostProcessing.TabIndex = 1;
+            this.groupBoxPostProcessing.TabStop = false;
+            this.groupBoxPostProcessing.Text = "Post Processing";
             // 
             // Transformer
             // 

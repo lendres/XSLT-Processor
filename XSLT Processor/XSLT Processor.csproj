@@ -41,9 +41,6 @@
     <Reference Include="C5">
       <HintPath>References\C5.dll</HintPath>
     </Reference>
-    <Reference Include="DPM">
-      <HintPath>References\DPM.dll</HintPath>
-    </Reference>
     <Reference Include="Plossum CommandLine">
       <HintPath>References\Plossum CommandLine.dll</HintPath>
     </Reference>
@@ -92,6 +89,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\C-Sharp-Library\Library\DPM.csproj">
+      <Project>{078ea7c0-7ee8-4d51-9421-8eedc779acbb}</Project>
+      <Name>DPM</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
