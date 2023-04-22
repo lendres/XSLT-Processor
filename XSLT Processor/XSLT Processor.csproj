@@ -91,9 +91,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\C-Sharp-Library\Library\DPM.csproj">
+    <ProjectReference Include="..\..\C-Sharp-Library\Library\Digital Production.csproj">
       <Project>{078ea7c0-7ee8-4d51-9421-8eedc779acbb}</Project>
-      <Name>DPM</Name>
+      <Name>Digital Production</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
