@@ -16,7 +16,7 @@ namespace DigitalProduction.XSTProcessor
 		/// Constructor.
 		/// </summary>
 		/// <param name="owner">Owner of this registry access.</param>
-		public RegistryAccess(DPMForm owner) :
+		public RegistryAccess(DigitalProductionForm owner) :
 			base(owner)
 		{
 			this.Install += this.OnInstall;
