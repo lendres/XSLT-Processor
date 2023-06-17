@@ -14,7 +14,7 @@ namespace DigitalProduction.XSTProcessor
 	/// A simple XSLT transformer.
 	/// </summary>
 	[CommandLineManager(ApplicationName = "XSLT Transformer", Copyright = "Copyright (c) Lance A. Endres.")]
-	public partial class Transformer : DPMForm
+	public partial class Transformer : DigitalProductionForm
 	{
 		#region Members
 
@@ -181,7 +181,7 @@ namespace DigitalProduction.XSTProcessor
 		private void buttonBrowseXsltFile_Click(object sender, EventArgs eventArgs)
 		{
 			string filterString	= "XSL Transformation files (*.xslt)|*.xslt|XML files (*.xml)|*.xml|Text files (*.txt)|*.txt|All files (*.*)|*.*";
-			string path			= FileSelect.BrowseForAFile(this, filterString, "Select the XSLT File");
+			string path			= FileSelect.BrowseForAFile(this, filterString, "Select the XSLT File", Path.GetDirectoryName(this.textBoxXsltFile.Text));
 
 			if (path != "")
 			{
@@ -196,7 +196,7 @@ namespace DigitalProduction.XSTProcessor
 		/// <param name="eventArgs">Event arguments.</param>
 		private void buttonBrowseOutputFile_Click(object sender, EventArgs eventArgs)
 		{
-			string path = FileSelect.BrowseForANewFileLocation(this, "All files (*.*)|*.*", "Output File");
+			string path = FileSelect.BrowseForANewFileLocation(this, "All files (*.*)|*.*", "Output File", Path.GetDirectoryName(this.textBoxOutputFile.Text));
 
 			if (path != "")
 			{
