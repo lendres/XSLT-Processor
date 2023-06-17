@@ -169,7 +169,7 @@ namespace DigitalProduction.XSTProcessor
 
 			if (path != "")
 			{
-				this.InputFile = path;
+				this.InputFile = DigitalProduction.IO.Path.ConvertToRelativePath(path, Directory.GetCurrentDirectory());
 			}
 		}
 
@@ -185,7 +185,7 @@ namespace DigitalProduction.XSTProcessor
 
 			if (path != "")
 			{
-				this.XsltFile = path;
+				this.XsltFile = DigitalProduction.IO.Path.ConvertToRelativePath(path, Directory.GetCurrentDirectory());
 			}
 		}
 
@@ -200,7 +200,7 @@ namespace DigitalProduction.XSTProcessor
 
 			if (path != "")
 			{
-				this.OutputFile = path;
+				this.OutputFile = DigitalProduction.IO.Path.ConvertToRelativePath(path, Directory.GetCurrentDirectory());
 			}
 		}
 
@@ -230,7 +230,7 @@ namespace DigitalProduction.XSTProcessor
 
 			if (path != "")
 			{
-				this.PostProcessor = path;
+				this.PostProcessor = DigitalProduction.IO.Path.ConvertToRelativePath(path, Directory.GetCurrentDirectory());
 			}
 		}
 
