@@ -47,5 +47,6 @@ Temporary Items
 bin/
 obj/
 *.pdb
+packages/
 TestResults/
 .vs/XSLT Processor/FileContentIndex/bfc8536e-aeea-49c8-8ac1-9bcef78a16de.vsidx
